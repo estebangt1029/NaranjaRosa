@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('referencia');
+            $table->string('referencia')->unique();
             $table->string('nombre');
             $table->integer('cantidad');
+            $table->integer('s');
+            $table->integer('m');
+            $table->integer('l');
+            $table->integer('xl');
+            $table->integer('xxl');
             $table->string('stock');
             $table->timestamps();
         });

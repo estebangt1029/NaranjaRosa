@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date('fecha');
             $table->time('hora');
-            $table->integer('cantidad')->default(1);
+            $table->integer('cantidad');
+            $table->integer('s');
+            $table->integer('m');
+            $table->integer('l');
+            $table->integer('xl');
+            $table->integer('xxl');
             $table->string('cliente');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->timestamps();

@@ -23,17 +23,27 @@
 <template>
     <AppLayout title="Salidas">
         <div class="container-fluid text-center mt-4">
-            <a href="./salidas/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400 mb-4 w-100">Crear Salida</a>
-            <input id="search" type="search" class="search w-100 mb-3" placeholder="Filtrar Salidas">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <input id="search" type="search" class="search w-75" placeholder="Filtrar Salidas">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="./salidas/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400">Crear Salida</a>
+                    <a :href="'/generar-pdf-salidas'" class="btn btn-primary">Descargar PDF</a>
+                </div>
+            </div>
             <table class="table table-white table-hover bg-gray-500">
                 <thead class="bg-gray-200 text-dark">
                     <tr>
                         <th>#</th>
-                        <th>fecha</th>
-                        <th>hora</th>
-                        <th>cantidad</th>
-                        <th>cliente</th>
-                        <th>product_id</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Cantidad</th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>XL</th>
+                        <th>XXL</th>
+                        <th>Cliente</th>
+                        <th>Product_id</th>
                         <!-- <th>Acciones</th> -->
 
                     </tr>
@@ -44,6 +54,11 @@
                         <td>{{ salida.fecha }}</td>
                         <td>{{ salida.hora }}</td>
                         <td>{{ salida.cantidad }}</td>
+                        <td>{{ salida.s }}</td>
+                        <td>{{ salida.m }}</td>
+                        <td>{{ salida.l }}</td>
+                        <td>{{ salida.xl }}</td>
+                        <td>{{ salida.xxl }}</td>
                         <td>{{ salida.cliente }}</td>
                         <td>{{ salida.product_id }}</td>
                         <!-- <td class="d-flex justify-center"> -->

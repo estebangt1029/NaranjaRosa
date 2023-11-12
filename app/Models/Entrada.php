@@ -13,6 +13,11 @@ class Entrada extends Model
         'fecha',
         'hora',
         'cantidad',
+        's',
+        'm',
+        'l',
+        'xl',
+        'xxl',
         'product_id',
     ];
 

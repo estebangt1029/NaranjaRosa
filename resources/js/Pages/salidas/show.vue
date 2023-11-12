@@ -42,9 +42,9 @@ function submit() {
                     <div class="col-10 d-flex flex-column">
                         <label for="cliente">Cliente</label>
                         <select name="Cliente" id="cliente" v-model="form.cliente" class="bg-gray-400">
-                            <option value="pagina">pagina</option>
-                            <option value="local">local</option>
-                            <option value="mayorista">mayorista</option>
+                            <option value="pagina">Pagina</option>
+                            <option value="local">Local</option>
+                            <option value="mayorista">Mayorista</option>
                         </select>
                     </div>
                     <div class="col-10 d-flex flex-column">

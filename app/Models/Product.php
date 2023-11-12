@@ -13,6 +13,11 @@ class Product extends Model
         'referencia',
         'nombre',
         'cantidad',
+        's',
+        'm',
+        'l',
+        'xl',
+        'xxl',
         'stock',
     ];
 

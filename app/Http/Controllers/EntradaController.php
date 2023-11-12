@@ -6,6 +6,7 @@ use App\Models\Entrada;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
+use PDF;
 
 class EntradaController extends Controller
 {
@@ -38,20 +39,35 @@ class EntradaController extends Controller
         $request->validate([
             'fecha'=>'required',
             'hora'=>'required',
-            'cantidad'=>'required',
+            // 'cantidad'=>'required',
+            's'=>'required',
+            'm'=>'required',
+            'l'=>'required',
+            'xl'=>'required',
+            'xxl'=>'required',
             'product_id'=>'required',
         ]);
         $entrada=new Entrada;
         $entrada->fecha=$request->fecha;
         $entrada->hora=$request->hora;
-        $entrada->cantidad=$request->cantidad;
+        $entrada->cantidad=$request->s+$request->m+$request->l+$request->xl+$request->xxl;
+        $entrada->s=$request->s;
+        $entrada->m=$request->m;
+        $entrada->l=$request->l;
+        $entrada->xl=$request->xl;
+        $entrada->xxl=$request->xxl;
         $entrada->product_id = $request->product_id;
         $entrada->save();
 
         // Actualizar la cantidad del producto
         $producto = Product::find($request->product_id);
         if ($producto) {
-            $producto->cantidad += $request->cantidad; // Aumentar la cantidad
+            $producto->cantidad += $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $producto->s+=$request->s;
+            $producto->m+=$request->m;
+            $producto->l+=$request->l;
+            $producto->xl+=$request->xl;
+            $producto->xxl+=$request->xxl;
             $producto->save();
         }
 
@@ -86,7 +102,12 @@ class EntradaController extends Controller
         $request->validate([
             'fecha' => 'required',
             'hora' => 'required',
-            'cantidad' => 'required',
+            // 'cantidad' => 'required',
+            's' => 'required',
+            'm' => 'required',
+            'l' => 'required',
+            'xl' => 'required',
+            'xxl' => 'required',
             'product_id' => 'required',
         ]);
 
@@ -110,5 +131,14 @@ class EntradaController extends Controller
     {
         $entrada->delete();
         return redirect()->route('entradas.index');
+    }
+
+    public function generatePDF()
+    {
+        $entradas = Entrada::all();
+
+        $pdf = PDF::loadView('pdf.entradas', ['entradas' => $entradas]);
+
+        return $pdf->download('entradas.pdf');
     }
 }

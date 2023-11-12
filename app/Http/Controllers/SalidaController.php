@@ -6,6 +6,7 @@ use App\Models\Salida;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
+use PDF;
 
 class SalidaController extends Controller
 {
@@ -38,7 +39,12 @@ class SalidaController extends Controller
         $request->validate([
             'fecha' => 'required',
             'hora' => 'required',
-            'cantidad' => 'required',
+            // 'cantidad' => 'required',
+            's' => 'required',
+            'm' => 'required',
+            'l' => 'required',
+            'xl' => 'required',
+            'xxl' => 'required',
             'cliente' => 'required',
             'product_id' => 'required',
         ]);
@@ -47,24 +53,64 @@ class SalidaController extends Controller
         $producto = Product::find($request->product_id);
     
         // Verificar si el producto existe y si la cantidad solicitada no es mayor que la cantidad disponible
-        if ($producto && $request->cantidad <= $producto->cantidad) {
+        if ($producto && $request->s <= $producto->s && $request->m <= $producto->m && $request->l <= $producto->l && $request->xl <= $producto->xl && $request->xxl <= $producto->xxl) {
             $salida = new Salida;
             $salida->fecha = $request->fecha;
             $salida->hora = $request->hora;
-            $salida->cantidad = $request->cantidad;
+            $salida->cantidad = $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $salida->s = $request->s;
+            $salida->m = $request->m;
+            $salida->l = $request->l;
+            $salida->xl = $request->xl;
+            $salida->xxl = $request->xxl;
+
             $salida->cliente = $request->cliente;
             $salida->product_id = $request->product_id;
             $salida->save();
     
             // Actualizar la cantidad del producto
-            $producto->cantidad -= $request->cantidad; // Disminuir la cantidad
+            // $producto->cantidad -= $request->cantidad;
+            $producto->cantidad -= $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $producto->s -= $request->s;
+            $producto->m -= $request->m;
+            $producto->l -= $request->l;
+            $producto->xl -= $request->xl;
+            $producto->xxl -= $request->xxl;
             $producto->save();
     
             return redirect()->route('salidas.index');
         } else {
-            $productos = Product::all();
-            $error='La cantidad solicitada es mayor que la cantidad disponible';
-            return Inertia::render('salidas/create', ['error' => $error,'productos' => $productos]);
+            if($request->s > $producto->s){
+                $productos = Product::all();
+                $errorS='La cantidad solicitada es mayor que la cantidad disponible';
+                return Inertia::render('salidas/create', ['errorS' => $errorS,'productos' => $productos]);
+            }
+            if($request->m > $producto->m){
+                $productos = Product::all();
+                $errorm='La cantidad solicitada es mayor que la cantidad disponible';
+                return Inertia::render('salidas/create', ['errorm' => $errorm,'productos' => $productos]);
+            }
+            if($request->l > $producto->l){
+                $productos = Product::all();
+                $errorl='La cantidad solicitada es mayor que la cantidad disponible';
+                return Inertia::render('salidas/create', ['errorl' => $errorl,'productos' => $productos]);
+            }
+            if($request->xl > $producto->xl){
+                $productos = Product::all();
+                $errorxl='La cantidad solicitada es mayor que la cantidad disponible';
+                return Inertia::render('salidas/create', ['errorxl' => $errorxl,'productos' => $productos]);
+            }
+            if($request->xxl > $producto->xxl){
+                $productos = Product::all();
+                $errorxxl='La cantidad solicitada es mayor que la cantidad disponible';
+                return Inertia::render('salidas/create', ['errorxxl' => $errorxxl,'productos' => $productos]);
+            }
+            if($salida->cantidad <= 1){
+                $productos = Product::all();
+                $error='La salida debe tener almenos un valor';
+                return Inertia::render('salidas/create', ['error' => $error,'productos' => $productos]);
+            }
+            
         }
     }
 
@@ -120,5 +166,14 @@ class SalidaController extends Controller
     {
         $salida->delete();
         return redirect()->route('salidas.index');
+    }
+
+    public function generatePDF()
+    {
+        $salidas = Salida::all();
+
+        $pdf = PDF::loadView('pdf.salidas', ['salidas' => $salidas]);
+
+        return $pdf->download('salidas.pdf');
     }
 }

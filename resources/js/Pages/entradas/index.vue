@@ -23,16 +23,26 @@
 <template>
     <AppLayout title="Entradas">
         <div class="container-fluid text-center mt-4">
-            <a href="./entradas/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400 mb-4 w-100">Crear Entrada</a>
-            <input id="search" type="search" class="search w-100 mb-3" placeholder="Filtrar Entradas">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <input id="search" type="search" class="search w-75" placeholder="Filtrar Entradas">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="./entradas/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400">Crear Entrada</a>
+                    <a :href="'/generar-pdf-entradas'" class="btn btn-primary">Descargar PDF</a>
+                </div>
+            </div>
             <table class="table table-white table-hover bg-gray-500">
                 <thead class="bg-gray-200 text-dark">
                     <tr>
                         <th>#</th>
-                        <th>fecha</th>
-                        <th>hora</th>
-                        <th>cantidad</th>
-                        <th>product_id</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Cantidad</th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>Xl</th>
+                        <th>XXL</th>
+                        <th>Producto</th>
                         <!-- <th>Acciones</th> -->
                     </tr>
                 </thead>    
@@ -42,6 +52,11 @@
                         <td>{{ entrada.fecha }}</td>
                         <td>{{ entrada.hora }}</td>
                         <td>{{ entrada.cantidad }}</td>
+                        <td>{{ entrada.s }}</td>
+                        <td>{{ entrada.m }}</td>
+                        <td>{{ entrada.l }}</td>
+                        <td>{{ entrada.xl }}</td>
+                        <td>{{ entrada.xxl }}</td>
                         <td>{{ entrada.product_id }}</td>
                         <!-- <td class="d-flex justify-center">
                             <a :href="'/entradas/'+entrada.id+'/edit'" class="btn btn-warning w-50 p-1 d-flex justify-center" >

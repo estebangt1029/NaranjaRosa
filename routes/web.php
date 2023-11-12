@@ -66,4 +66,13 @@ Route::middleware([
     // Route::post('/salidas/update', [salidaController::class, 'update'])->name('salidas.update');
     Route::put('/salidas/{salida}', [SalidaController::class, 'update'])->name('salidas.update');
     Route::get('/salidas/{salida}/delete', [SalidaController::class, 'destroy'])->name('salidas.destroy');
+
+
+    //pdf
+    Route::get('/generar-pdf-productos', [ProductController::class, 'generatePDF']);
+    Route::get('/generar-pdf-entradas', [EntradaController::class, 'generatePDF']);
+    Route::get('/generar-pdf-salidas', [SalidaController::class, 'generatePDF']);
+
+
+
 });

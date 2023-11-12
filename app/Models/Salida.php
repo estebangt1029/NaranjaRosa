@@ -13,6 +13,11 @@ class Salida extends Model
         'fecha',
         'hora',
         'cantidad',
+        's',
+        'm',
+        'l',
+        'xl',
+        'xxl',
         'cliente',
         'product_id',
     ];

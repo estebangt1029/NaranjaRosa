@@ -22,16 +22,26 @@
 <template>
     <AppLayout title="Products">
         <div class="container-fluid text-center mt-4">
-            <a href="./products/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400 mb-4 w-100">Crear Producto</a>
-            <input id="search" type="search" class="search w-100 mb-3" placeholder="Filtrar Productos">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <input id="search" type="search" class="search w-75" placeholder="Filtrar Productos">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="./products/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400">Crear Producto</a>
+                    <a :href="'/generar-pdf-productos'" class="btn btn-primary">Descargar PDF</a>
+                </div>
+            </div>
             <table class="table table-white table-hover bg-gray-900">
                 <thead class="bg-gray-200 text-dark">
                     <tr>
                         <th>#</th>
-                        <th>referencia</th>
-                        <th>nombre</th>
-                        <th>cantidad</th>
-                        <th>stock</th>
+                        <th>Referencia</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>XL</th>
+                        <th>XXL</th>
+                        <th>Stock</th>
                         <th>Acciones</th>
 
                     </tr>
@@ -42,6 +52,11 @@
                         <td>{{ product.referencia }}</td>
                         <td>{{ product.nombre }}</td>
                         <td>{{ product.cantidad }}</td>
+                        <td>{{ product.s }}</td>
+                        <td>{{ product.m }}</td>
+                        <td>{{ product.l }}</td>
+                        <td>{{ product.xl }}</td>
+                        <td>{{ product.xxl }}</td>
                         <td>{{ product.stock }}</td>
                         <td class="d-flex justify-center">
                             <a :href="'/products/'+product.id+'/edit'" class="btn btn-warning w-50 p-1 d-flex justify-center" >
@@ -64,3 +79,8 @@
 
     </AppLayout>
 </template>
+<style>
+    .filtro{
+        display: none;
+    }
+</style>

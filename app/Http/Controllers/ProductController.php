@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -33,14 +34,24 @@ class ProductController extends Controller
         $request->validate([
             'referencia'=>'required',
             'nombre'=>'required',
-            'cantidad'=>'required',
+            // 'cantidad'=>'required',
+            's'=>'required',
+            'm'=>'required',
+            'l'=>'required',
+            'xl'=>'required',
+            'xxl'=>'required',
             'stock'=>'required',
             // 'user_id' => 'required'
         ]);
         $product=new Product;
         $product->referencia=$request->referencia;
         $product->nombre=$request->nombre;
-        $product->cantidad=$request->cantidad;
+        $product->cantidad = $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+        $product->s=$request->s;
+        $product->m=$request->m;
+        $product->l=$request->l;
+        $product->xl=$request->xl;
+        $product->xxl=$request->xxl;
         $product->stock=$request->stock;
         $product->save();
         return redirect()->route('products.index');
@@ -70,14 +81,24 @@ class ProductController extends Controller
         $request->validate([
             'referencia' => 'required',
             'nombre' => 'required',
-            'cantidad' => 'required',
+            // 'cantidad' => 'required',
+            's' => 'required',
+            'm' => 'required',
+            'l' => 'required',
+            'xl' => 'required',
+            'xxl' => 'required',
             'stock' => 'required',
         ]);
 
         // Actualiza los datos de la entrada
         $product->referencia = $request->referencia;
         $product->nombre = $request->nombre;
-        $product->cantidad = $request->cantidad;
+        $product->cantidad = $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+        $product->s = $request->s;
+        $product->m = $request->m;
+        $product->l = $request->l;
+        $product->xl = $request->xl;
+        $product->xxl = $request->xxl;
         $product->stock = $request->stock;
         $product->save();
 
@@ -92,5 +113,14 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index');
+    }
+
+    public function generatePDF()
+    {
+        $products = Product::all();
+
+        $pdf = PDF::loadView('pdf.productos', ['products' => $products]);
+
+        return $pdf->download('productos.pdf');
     }
 }
