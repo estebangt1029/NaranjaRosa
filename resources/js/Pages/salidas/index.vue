@@ -24,10 +24,13 @@
     <AppLayout title="Salidas">
         <div class="container-fluid text-center mt-4">
             <div class="d-flex align-items-center justify-content-between p-3">
-                <input id="search" type="search" class="search w-75" placeholder="Filtrar Salidas">
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-1 w-75">
+                    <input id="search" type="search" class="search w-75 rounded" placeholder="Filtrar Salidas">
                     <a href="./salidas/create" class="btn btn-dark bg-gray-200 text-white hover:bg-gray-400">Crear Salida</a>
-                    <a :href="'/generar-pdf-salidas'" class="btn btn-primary">Descargar PDF</a>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                    <a :href="'/generar-pdf-salidas'" class="btn btn-primary">PDF</a>
+                    <a :href="'/generar-excel-salidas'" class="btn btn-primary">EXCEL</a>
                 </div>
             </div>
             <table class="table table-white table-hover bg-gray-500">

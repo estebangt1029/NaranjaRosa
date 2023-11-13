@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use PDF;
+use Excel;
+use App\Exports\EntradasExport;
 
 class EntradaController extends Controller
 {
@@ -140,5 +142,10 @@ class EntradaController extends Controller
         $pdf = PDF::loadView('pdf.entradas', ['entradas' => $entradas]);
 
         return $pdf->download('entradas.pdf');
+    }
+
+    public function generateEXCEL()
+    {
+        return Excel::download(new EntradasExport(), 'entradas.xlsx');
     }
 }

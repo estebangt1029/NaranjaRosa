@@ -74,5 +74,8 @@ Route::middleware([
     Route::get('/generar-pdf-salidas', [SalidaController::class, 'generatePDF']);
 
 
+    Route::get('/generar-excel-productos', [ProductController::class, 'generateEXCEL']);
+    Route::get('/generar-excel-entradas', [EntradaController::class, 'generateEXCEL']);
+    Route::get('/generar-excel-salidas', [SalidaController::class, 'generateEXCEL']);
 
 });

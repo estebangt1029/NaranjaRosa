@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use PDF;
+use Excel;
+use App\Exports\ProductsExport;
+
 
 class ProductController extends Controller
 {
@@ -122,5 +125,10 @@ class ProductController extends Controller
         $pdf = PDF::loadView('pdf.productos', ['products' => $products]);
 
         return $pdf->download('productos.pdf');
+    }
+
+    public function generateEXCEL()
+    {
+        return Excel::download(new ProductsExport(), 'productos.xlsx');
     }
 }
