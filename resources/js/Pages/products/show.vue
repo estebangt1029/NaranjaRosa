@@ -32,7 +32,7 @@ function submit() {
                 <div class="row md-6 d-flex justify-center g-4">
                     <div class="col-10 d-flex flex-column">
                         <label for="referencia">referencia</label>
-                        <input id="referencia" type="text" v-model="form.referencia" class="w-100 bg-gray-400">
+                        <input disabled id="referencia" type="text" v-model="form.referencia" class="w-100 bg-gray-400">
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="nombre">nombre</label>

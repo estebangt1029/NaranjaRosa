@@ -54,12 +54,20 @@ class SalidaController extends Controller
         // Obtener el producto
         $producto = Product::find($request->product_id);
     
+        $cantidadTotal = $request->s + $request->m + $request->l + $request->xl + $request->xxl;
+
+        // Verificar que la cantidad total sea al menos 1
+        if ($cantidadTotal < 1) {
+            $entrada = Product::all();
+            $errores = 'La cantidad total debe ser al menos 1';
+            return Inertia::render('entradas/create', ['errores' => $errores, 'entrada' => $entrada]);
+        }
         // Verificar si el producto existe y si la cantidad solicitada no es mayor que la cantidad disponible
-        if ($producto && $request->s <= $producto->s && $request->m <= $producto->m && $request->l <= $producto->l && $request->xl <= $producto->xl && $request->xxl <= $producto->xxl) {
+        if ($cantidadTotal > 0 && $producto && $request->s <= $producto->s && $request->m <= $producto->m && $request->l <= $producto->l && $request->xl <= $producto->xl && $request->xxl <= $producto->xxl) {
             $salida = new Salida;
             $salida->fecha = $request->fecha;
             $salida->hora = $request->hora;
-            $salida->cantidad = $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $salida->cantidad = $cantidadTotal;
             $salida->s = $request->s;
             $salida->m = $request->m;
             $salida->l = $request->l;
@@ -72,7 +80,7 @@ class SalidaController extends Controller
     
             // Actualizar la cantidad del producto
             // $producto->cantidad -= $request->cantidad;
-            $producto->cantidad -= $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $producto->cantidad -= $cantidadTotal;
             $producto->s -= $request->s;
             $producto->m -= $request->m;
             $producto->l -= $request->l;

@@ -38,6 +38,8 @@ class EntradaController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $request->validate([
             'fecha'=>'required',
             'hora'=>'required',
@@ -49,10 +51,26 @@ class EntradaController extends Controller
             'xxl'=>'required',
             'product_id'=>'required',
         ]);
+
+        $cantidadTotal = $request->s + $request->m + $request->l + $request->xl + $request->xxl;
+
+        // Verificar que la cantidad total sea al menos 1
+        if ($cantidadTotal < 1) {
+            $entrada = Product::all();
+            $errores = 'La cantidad total debe ser al menos 1';
+            return Inertia::render('entradas/create', ['errores' => $errores, 'entrada' => $entrada]);
+        }
+
+        if ($request->product_id == '') {
+            $entrada = Product::all();
+            $errores = 'Debe elegir un producto';
+            return Inertia::render('entradas/create', ['errores' => $errores, 'entrada' => $entrada]);
+        }
+
         $entrada=new Entrada;
         $entrada->fecha=$request->fecha;
         $entrada->hora=$request->hora;
-        $entrada->cantidad=$request->s+$request->m+$request->l+$request->xl+$request->xxl;
+        $entrada->cantidad = $cantidadTotal;
         $entrada->s=$request->s;
         $entrada->m=$request->m;
         $entrada->l=$request->l;
@@ -64,7 +82,7 @@ class EntradaController extends Controller
         // Actualizar la cantidad del producto
         $producto = Product::find($request->product_id);
         if ($producto) {
-            $producto->cantidad += $request->s+$request->m+$request->l+$request->xl+$request->xxl;
+            $producto->cantidad = $cantidadTotal;
             $producto->s+=$request->s;
             $producto->m+=$request->m;
             $producto->l+=$request->l;

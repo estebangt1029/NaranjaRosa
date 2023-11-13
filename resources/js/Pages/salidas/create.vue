@@ -56,11 +56,11 @@ document.addEventListener("keyup", e => {
                 <div class="row md-6 d-flex justify-center g-4">
                     <div class="col-10 d-flex flex-column">
                         <label for="fecha">Fecha</label>
-                        <input id="fecha" type="date" v-model="form.fecha" class="w-100 bg-gray-400">
+                        <input disabled id="fecha" type="date" v-model="form.fecha" class="w-100 bg-gray-400">
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="hora">Hora</label>
-                        <input id="hora" type="time" v-model="form.hora" class="w-100 bg-gray-400">
+                        <input disabled id="hora" type="time" v-model="form.hora" class="w-100 bg-gray-400">
                     </div>
                     <!-- <div class="col-10 d-flex flex-column">
                         <label for="cantidad">Cantidad</label>
@@ -69,27 +69,27 @@ document.addEventListener("keyup", e => {
                     </div> -->
                     <div class="col-10 d-flex flex-column">
                         <label for="s">S</label>
-                        <input id="s" type="number" v-model="form.s" class="w-100 bg-gray-400">
+                        <input id="s" type="number" v-model="form.s" class="w-100 bg-gray-400" min="0" max="100000">
                         <p class="text-danger">{{ errorS }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="m">M</label>
-                        <input id="m" type="number" v-model="form.m" class="w-100 bg-gray-400">
+                        <input id="m" type="number" v-model="form.m" class="w-100 bg-gray-400" min="0" max="100000">
                         <p class="text-danger">{{ errorm }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="l">L</label>
-                        <input id="l" type="number" v-model="form.l" class="w-100 bg-gray-400">
+                        <input id="l" type="number" v-model="form.l" class="w-100 bg-gray-400" min="0" max="100000">
                         <p class="text-danger">{{ errorl }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="xl">XL</label>
-                        <input id="xl" type="number" v-model="form.xl" class="w-100 bg-gray-400">
+                        <input id="xl" type="number" v-model="form.xl" class="w-100 bg-gray-400" min="0" max="100000">
                         <p class="text-danger">{{ errorxl }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="xxl">XXL</label>
-                        <input id="xxl" type="number" v-model="form.xxl" class="w-100 bg-gray-400">
+                        <input id="xxl" type="number" v-model="form.xxl" class="w-100 bg-gray-400" min="0" max="100000">
                         <p class="text-danger">{{ errorxxl }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
@@ -104,7 +104,7 @@ document.addEventListener("keyup", e => {
                         <label for="product_id">Producto</label>
                         <input id="search" type="search" class="search w-100 mb-3" placeholder="Filtrar Productos">
                         <select name="product_id" id="product_id" v-model="form.product_id" class="bg-gray-400">
-                            <option class="salida" v-for="producto in productos" :key="producto.id" :value="producto.id">{{ producto.nombre }}</option>
+                            <option class="salida" v-for="producto in productos" :key="producto.id" :value="producto.id">{{ producto.referencia }}</option>
                         </select>
                     </div>
                     

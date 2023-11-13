@@ -4,6 +4,8 @@ import { useForm } from "@inertiajs/vue3"
 
 defineProps({
     products: Array,
+    error: String,
+    errores: String,
 });
 
 const form = useForm({
@@ -30,9 +32,11 @@ function submit() {
         <form action="" @submit.prevent="submit()">
             <div class="container text-center p-5 text-gray-900">
                 <div class="row md-6 d-flex justify-center g-4">
+                    <p class="text-danger">{{ errores }}</p>
                     <div class="col-10 d-flex flex-column">
                         <label for="referencia">Referencia</label>
                         <input min="0" id="referencia" type="text" v-model="form.referencia" class="w-100 bg-gray-400">
+                        <p class="text-danger">{{ error }}</p>
                     </div>
                     <div class="col-10 d-flex flex-column">
                         <label for="nombre">Nombre</label>
